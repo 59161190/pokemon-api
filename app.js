@@ -10,7 +10,7 @@ var pokemons = [
   { name: "Raichu", type: "Electric" }
 ];
 
-app.get("/", (req, res) => res.send("Hello World!!"));
+app.get("/", (req, res) => res.send("Hello World!! eeeeee"));
 // Get ->   /pokemons -> list all pokemon
 app.get("/pokemons", (req, res) => res.send(pokemons));
 
