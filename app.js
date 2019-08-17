@@ -67,24 +67,38 @@ app.put("/pokemons/:id", (req,res)=>{
   
 })
 
+app.delete("/pokemons/:id", (req,res) =>{
+  if(!isInsufficientparameter(req.params.id)){
+    res.status(400).send({error:'Insufficient parameters: ID is required parameter'})
+      return
+  }
+  let id = req.params.id
+  let p = pokemons[id-1]
+  if(!isPokemonExsited(id)){
+    res.status(400).send({error:'Cannot delete pokemon! Pokemon is not found'})
+    return
+  }
+  delete pokemons[id-1]
+  res.sendStatus(204)
+})
 
-
-
+// ----------------------------------------------------------------------------------
 function isInsufficientparameter(v){
   return v !== null || v !=='' || v !== undefined
 }
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-
 
 function createnewPokemon(name,type){
   let p = new Pokemon (name,type)
   p.id = genNewId(pokemons.length)
   return p
 }
+function isPokemonExsited(id){
+  return pokemons[id-1] !== null && pokemons[id-1] !== undefined
+}
 
 function genNewId(num){
     let newId = num +1
     return newId
 }
+// ----------------------------------------------------------------------------------
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
